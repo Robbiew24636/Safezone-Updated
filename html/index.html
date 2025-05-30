@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    #safezone-banner {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(34, 197, 94, 0.9); /* green background */
+      color: white;
+      padding: 12px 24px;
+      font-size: 20px;
+      font-weight: bold;
+      font-family: sans-serif;
+      border-radius: 12px;
+      display: none;
+      opacity: 0;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    #safezone-banner.show {
+      display: block;
+      opacity: 1;
+    }
+
+    #safezone-banner.hide {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="safezone-banner">You are in a Safe Zone</div>
+
+  <script>
+    window.addEventListener('message', function(event) {
+      const banner = document.getElementById('safezone-banner');
+      if (event.data.action === 'show') {
+        banner.style.display = 'block';
+        banner.classList.remove('hide');
+        banner.classList.add('show');
+      } else if (event.data.action === 'hide') {
+        banner.classList.remove('show');
+        banner.classList.add('hide');
+        setTimeout(() => {
+          banner.style.display = 'none';
+        }, 500);
+      }
+    });
+  </script>
+</body>
+</html>
